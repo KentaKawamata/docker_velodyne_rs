@@ -76,6 +76,37 @@ RUN cp config/99-realsense-libusb.rules /etc/udev/rules.d/
 #########################################################################
 
 
+# Install Qt5 and openni2
+#########################################################################
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y qtcreator \
+                       qt5-default \
+                       libopenni2-dev
+#########################################################################
+
+
+# Install CloudCompare
+#########################################################################
+WORKDIR /Source/
+RUN wget https://github.com/CloudCompare/CloudCompare/archive/v2.9.1.zip
+RUN unzip v2.9.1.zip
+RUN mkdir -p /Source/CloudCompare-2.9.1/build
+WORKDIR /Source/CloudCompare-2.9.1/build/
+RUN cmake .. -DOPTION_BUILD_CCVIEWER=ON \
+             -DOPTION_GL_QUAD_BUFFER_SUPPORT=ON \
+             -DOPTION_BUILD_PLUGIN=TRUE \
+             -DOPTION_GL_QUAD_BUFFER_SUPPORT=ON \
+             -DOPTION_USE_DXF_LIB=ON \
+             -DOPTION_USE_GDAL=ON \
+             -DINSTALL_QPCL_PLUGIN=TRUE \
+             -DINSTALL_QANIMATION_PLUGIN=TRUE && \
+    make && \
+    make install
+#########################################################################
+
+
+WORKDIR /
 # replace with other Ubuntu version if desired
 # see: https://hub.docker.com/r/nvidia/opengl/
 COPY --from=nvidia/opengl:1.0-glvnd-runtime-ubuntu16.04 \
