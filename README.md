@@ -8,6 +8,7 @@
 - CloudCompare-2.9.1
 - ros-kinetic-velodyne
 - realsense-ros
+- VSCode
 
 ### 動作確認環境
 |||
