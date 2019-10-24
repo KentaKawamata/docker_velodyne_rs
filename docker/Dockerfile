@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
         wget \
         unzip \
+        curl \
         vim && \
     apt-get autoclean && \
     rm -rf /var/lib/apt/lists/*
@@ -116,9 +117,24 @@ WORKDIR /Source/
 RUN rm -rf ./CloudCompare-2.9.1/
 #########################################################################
 
+# Install VSCode
+#######################################################################################################################################
+RUN apt-get update -y && \
+    apt-get install -y apt-transport-https && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/*
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+RUN install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+RUN sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+RUN apt-get update -y && \
+    apt-get install -y code && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/*
+#######################################################################################################################################
+
 # Copy bash file
 #########################################################################
-COPY ./start_code.bash ~/
+COPY start_code.bash /
 #########################################################################
 
 WORKDIR /
