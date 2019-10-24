@@ -37,6 +37,11 @@ WORKDIR /catkin_ws/src/
 RUN git clone https://github.com/ros-drivers/velodyne.git
 #########################################################################
 
+# Install realsense-ros
+#########################################################################
+RUN git clone https://github.com/IntelRealSense/realsense-ros.git
+#########################################################################
+
 RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc
 RUN echo "source /catkin_ws/devel/setup.bash" >> /root/.bashrc
 ARG DEBIAN_FRONTEND=noninteractive
@@ -66,13 +71,15 @@ RUN apt-get update -y && \
 RUN mkdir -p /Source/
 WORKDIR /Source/
 RUN wget https://github.com/IntelRealSense/librealsense/archive/v2.25.0.zip
-RUN unzip v2.25.0.zip
+RUN unzip v2.25.0.zip && rm v2.25.0.zip
 WORKDIR /Source/librealsense-2.25.0/
 RUN mkdir build
 WORKDIR /Source/librealsense-2.25.0/build/
 RUN cmake ./../ && make && make install 
 WORKDIR /Source/librealsense-2.25.0/
 RUN cp config/99-realsense-libusb.rules /etc/udev/rules.d/
+WORKDIR /Source/
+RUN rm -rf ./librealsense-2.25.0/
 #########################################################################
 
 
@@ -82,7 +89,9 @@ RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y qtcreator \
                        qt5-default \
-                       libopenni2-dev
+                       libopenni2-dev && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/*
 #########################################################################
 
 
@@ -90,7 +99,7 @@ RUN apt-get update -y && \
 #########################################################################
 WORKDIR /Source/
 RUN wget https://github.com/CloudCompare/CloudCompare/archive/v2.9.1.zip
-RUN unzip v2.9.1.zip
+RUN unzip v2.9.1.zip && rm v2.9.1.zip
 RUN mkdir -p /Source/CloudCompare-2.9.1/build
 WORKDIR /Source/CloudCompare-2.9.1/build/
 RUN cmake .. -DOPTION_BUILD_CCVIEWER=ON \
@@ -103,6 +112,8 @@ RUN cmake .. -DOPTION_BUILD_CCVIEWER=ON \
              -DINSTALL_QANIMATION_PLUGIN=TRUE && \
     make && \
     make install
+WORKDIR /Source/
+RUN rm -rf ./CloudCompare-2.9.1/
 #########################################################################
 
 
