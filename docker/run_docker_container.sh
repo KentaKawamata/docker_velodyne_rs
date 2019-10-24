@@ -13,7 +13,7 @@
 # 使用するイメージの設定
 IMAGE_NAME=$1
 if [[ -z "${IMAGE_NAME}" ]]; then
-    IMAGE_NAME=velo_realsense:latest
+    IMAGE_NAME=velo_rs:latest
 fi
 
 # コンテナ名の設定
