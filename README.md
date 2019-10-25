@@ -1,5 +1,8 @@
 # Use Velodyne and RealSense in Docker
 
+(dockerhub)[https://hub.docker.com/r/reizouko/use-velodyne-rs]
+(github)[https://github.com/KentaKawamata/docker_velodyne_rs]
+
 ### コンテナOS
 Ubuntu 16.04
 
