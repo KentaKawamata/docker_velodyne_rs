@@ -18,3 +18,11 @@
 |Docker|18.09.7|
 |nVIDIA Driver| 396.54|
 |CUDA|9.2.148|
+
+|||
+|:--:|:--:|
+|Host OS| Ubuntu 18.04|
+|kernel|4.15.0|
+|Docker|19.03.4|
+|nVIDIA Driver| 430.26|
+|CUDA|10.2|
