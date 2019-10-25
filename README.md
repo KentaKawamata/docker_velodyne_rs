@@ -1,5 +1,8 @@
 # Use Velodyne and RealSense in Docker
 
+### コンテナOS
+Ubuntu 16.04
+
 ### インストール済み
 
 - ROS kinetic
